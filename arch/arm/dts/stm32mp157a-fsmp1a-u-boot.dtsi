@@ -65,9 +65,6 @@
 	};
 };
 
-&pmic {
-	u-boot,dm-pre-reloc;
-};
 
 &rcc {
 	st,clksrc = <

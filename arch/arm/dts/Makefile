@@ -1060,6 +1060,7 @@ dtb-$(CONFIG_ARCH_STI) += stih410-b2260.dtb
 
 dtb-$(CONFIG_STM32MP15x) += \
 	stm32mp157a-dk1.dtb \
+	stm32mp157a-fsmp1a.dtb \
 	stm32mp157a-avenger96.dtb \
 	stm32mp157a-icore-stm32mp1-ctouch2.dtb \
 	stm32mp157a-icore-stm32mp1-edimm2.2.dtb \
