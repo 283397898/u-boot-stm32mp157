@@ -186,7 +186,7 @@
 	pinctrl-1 = <&ethernet0_rgmii_sleep_pins_a>;
 	pinctrl-names = "default", "sleep";
 	phy-mode = "rgmii-id";
-	max-speed = <1000>;
+	max-speed = <100>;
 	phy-handle = <&phy0>;
 
 	mdio0 {
