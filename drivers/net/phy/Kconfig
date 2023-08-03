@@ -200,6 +200,10 @@ config PHY_NATSEMI
 config PHY_REALTEK
 	bool "Realtek Ethernet PHYs support"
 
+config PHY_MAXIO
+	bool "supports the Maxio MAEXXXX PHY"
+	default n
+
 config RTL8211E_PINE64_GIGABIT_FIX
 	bool "Fix gigabit throughput on some Pine64+ models"
 	depends on PHY_REALTEK

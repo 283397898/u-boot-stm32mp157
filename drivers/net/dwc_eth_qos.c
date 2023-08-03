@@ -1147,7 +1147,7 @@ static int eqos_start(struct udevice *dev)
 	}
 
 	udelay(10);
-
+/*
 	eqos->reg_access_ok = true;
 
 	ret = wait_for_bit_le32(&eqos->dma_regs->mode,
@@ -1167,7 +1167,7 @@ static int eqos_start(struct udevice *dev)
 
 	val = (rate / 1000000) - 1;
 	writel(val, &eqos->mac_regs->us_tic_counter);
-
+*/
 	/*
 	 * if PHY was already connected and configured,
 	 * don't need to reconnect/reconfigure again
@@ -1218,6 +1218,26 @@ static int eqos_start(struct udevice *dev)
 		pr_err("eqos_adjust_link() failed: %d", ret);
 		goto err_shutdown_phy;
 	}
+	
+	eqos->reg_access_ok = true;
+
+	ret = wait_for_bit_le32(&eqos->dma_regs->mode,
+				EQOS_DMA_MODE_SWR, false,
+				eqos->config->swr_wait, false);
+	if (ret) {
+		pr_err("EQOS_DMA_MODE_SWR stuck");
+		goto err_stop_resets;
+	}
+
+	ret = eqos->config->ops->eqos_calibrate_pads(dev);
+	if (ret < 0) {
+		pr_err("eqos_calibrate_pads() failed: %d", ret);
+		goto err_stop_resets;
+	}
+	rate = eqos->config->ops->eqos_get_tick_clk_rate(dev);
+
+	val = (rate / 1000000) - 1;
+	writel(val, &eqos->mac_regs->us_tic_counter);
 
 	/* Configure MTL */
 
